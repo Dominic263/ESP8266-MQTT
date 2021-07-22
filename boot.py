@@ -3,7 +3,8 @@ import machine
 import ubinascii
 import network
 
-ssid = 'Tufts_Wireless'
+#Your wifi configurations go here
+ssid = ''
 password = ''
 
 def connect():
