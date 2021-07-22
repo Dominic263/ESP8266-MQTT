@@ -1,22 +1,23 @@
-#Program goes here
+#In this program messages will be exchanged between the broker and mqtt to turn on , off or blink an led 
 from machine import Pin
 import time
 import json
+
 # Setup a GPIO Pin for output
 led = Pin(0, Pin.OUT)
-#pin = machine.Pin(2, machine.Pin.OUT) '''
-# Modify below section as required
 
+# Modify below section as required
 CONFIG = {
     # Configuration details of the MQTT broker
-    "MQTT_BROKER": "broker.emqx.io",
-    "USER": "dndond01",
-    "PASSWORD": "123456&",
+    "MQTT_BROKER": "",
+    "USER": "",
+    "PASSWORD": "",
     "PORT": 1883,
     "TOPIC": b"ledstate",
     # unique identifier of the chip
     "CLIENT_ID": b"esp8266_" + ubinascii.hexlify(machine.unique_id())
 }
+
 #GLOBAL VARIABLES IN SCOPE
 client = MQTTClient(CONFIG['CLIENT_ID'], CONFIG['MQTT_BROKER'], user=CONFIG['USER'], password=CONFIG['PASSWORD'], port=CONFIG['PORT'])
 prevResult = ""
@@ -75,9 +76,6 @@ def onMessage(topic, msg):
         client.wait_msg()
          
 def listen():
-    #Create an instance of MQTTClient 
-    #client = MQTTClient(CONFIG['CLIENT_ID'], CONFIG['MQTT_BROKER'], user=CONFIG['USER'], password=CONFIG['PASSWORD'], port=CONFIG['PORT'])
-    # Attach call back handler to be called on receiving messages
     client.set_callback(onMessage)
     client.connect()
     client.publish("test", "ESP8266 is Connected")
